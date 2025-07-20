@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jack Dufresne</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 0 20px;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1 { font-size: 2.2em; margin-bottom: 0.4em; }
+  </style>
+</head>
+<body>
+  <h1>Jack Dufresne</h1>
+  <p>Mechanical engineer scaling AI ifastructure at Dell Technologies.</p>
+</body>
+</html>
