@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jack Dufresne</title>
+  <title>Jack Dufresne - Mechanical Engineer</title>
   <style>
     * {
       margin: 0;
@@ -11,25 +11,31 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #151515;
+      --bg-card: #1a1a1a;
+      --accent: #FF5733;
+      --accent-hover: #ff6b4d;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0b0;
+      --border: rgba(255, 87, 51, 0.2);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-      padding: 40px 20px;
-      color: #1a1a1a;
-      line-height: 1.7;
-      position: relative;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
       overflow-x: hidden;
+      position: relative;
     }
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
+    /* Subtle background pattern */
     body::before {
       content: '';
       position: fixed;
@@ -37,162 +43,829 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 87, 51, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 87, 51, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(255, 87, 51, 0.02) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Grid pattern overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 87, 51, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 87, 51, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
       pointer-events: none;
       z-index: 0;
     }
 
     .container {
-      max-width: 900px;
-      margin: 0 auto;
       position: relative;
       z-index: 1;
     }
 
-    header {
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 30px 40px;
-      margin-bottom: 40px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      z-index: 1000;
     }
 
-    header:hover {
+    .logo {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), #ff8c69);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: var(--bg-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .cta-button {
+      background: var(--accent);
+      color: var(--text-primary);
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      background: var(--accent-hover);
       transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px rgba(255, 87, 51, 0.3);
     }
 
-    h1 {
-      font-size: 2.5em;
-      margin: 0;
-      background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 40px 80px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5em, 6vw, 4.5em);
+      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1.2;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      font-weight: 700;
-      letter-spacing: -0.5px;
     }
 
-    nav {
+    .hero .subtitle {
+      font-size: clamp(1.1em, 2vw, 1.4em);
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
       display: flex;
-      gap: 24px;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
-    nav a {
+    .btn-primary {
+      background: var(--accent);
+      color: var(--text-primary);
+      padding: 16px 32px;
+      border-radius: 8px;
       text-decoration: none;
-      color: rgba(255, 255, 255, 0.95);
-      font-weight: 500;
-      padding: 8px 16px;
-      border-radius: 12px;
+      font-weight: 600;
       transition: all 0.3s ease;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: inline-block;
     }
 
-    nav a:hover {
-      background: rgba(255, 255, 255, 0.25);
+    .btn-primary:hover {
+      background: var(--accent-hover);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 20px rgba(255, 87, 51, 0.3);
     }
 
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      padding: 16px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 2px solid var(--accent);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* Section Styles */
     section {
-      margin-bottom: 30px;
-      padding: 40px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 100px 40px;
+      position: relative;
+      z-index: 1;
     }
 
-    section:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    .section-title {
+      font-size: clamp(2em, 4vw, 3em);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 20px;
     }
 
-    section p {
-      color: rgba(255, 255, 255, 0.95);
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-secondary);
       font-size: 1.1em;
+      margin-bottom: 60px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Skills Section */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 40px rgba(255, 87, 51, 0.15);
+    }
+
+    .skill-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .skill-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--accent), #ff8c69);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .skill-card h3 {
+      font-size: 1.3em;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .skill-card p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* About Section */
+    .about {
+      background: var(--bg-secondary);
+    }
+
+    .about-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-text {
+      font-size: 1.1em;
+      color: var(--text-secondary);
       line-height: 1.8;
     }
 
-    h2 {
-      font-size: 1.8em;
+    .about-text p {
       margin-bottom: 20px;
-      color: rgba(255, 255, 255, 0.95);
-      font-weight: 600;
     }
 
-    a {
-      color: rgba(255, 255, 255, 0.95);
-      text-decoration: none;
-      font-weight: 500;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    .about-highlights {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .highlight-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
       transition: all 0.3s ease;
-      padding-bottom: 2px;
     }
 
-    a:hover {
-      border-bottom-color: rgba(255, 255, 255, 0.8);
-      color: #ffffff;
+    .highlight-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .highlight-card h4 {
+      color: var(--accent);
+      font-size: 1.1em;
+      margin-bottom: 8px;
+    }
+
+    .highlight-card p {
+      color: var(--text-secondary);
+      font-size: 0.95em;
+    }
+
+    /* Projects Section */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 40px rgba(255, 87, 51, 0.15);
+    }
+
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-card h3 {
+      font-size: 1.4em;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .project-card p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      background: rgba(255, 87, 51, 0.1);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      border: 1px solid var(--border);
+    }
+
+    .project-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.3s ease;
+    }
+
+    .project-link:hover {
+      gap: 12px;
+    }
+
+    /* Contact Section */
+    .contact {
+      background: var(--bg-secondary);
+    }
+
+    .contact-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contact-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .contact-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-item:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .contact-item a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .contact-item a:hover {
+      color: var(--accent-hover);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 60px 40px 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand h3 {
+      font-size: 1.3em;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand p {
+      color: var(--text-secondary);
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    .footer-column h4 {
+      font-size: 1.1em;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-column a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-size: 0.95em;
+    }
+
+    .footer-column a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .copyright {
+      color: var(--text-secondary);
+      font-size: 0.9em;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 968px) {
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     @media (max-width: 768px) {
-      header {
+      nav {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+      }
+
+      .nav-links {
+        gap: 15px;
+        font-size: 0.9em;
+      }
+
+      .cta-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+      }
+
+      section {
+        padding: 60px 20px;
+      }
+
+      .hero {
+        padding: 100px 20px 60px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .about-highlights {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
         flex-direction: column;
         gap: 20px;
         text-align: center;
       }
+    }
 
-      nav {
-        flex-wrap: wrap;
-        justify-content: center;
+    @media (max-width: 480px) {
+      .nav-links {
+        display: none;
       }
 
-      h1 {
-        font-size: 2em;
-      }
-
-      section {
-        padding: 30px 24px;
+      .skills-grid,
+      .projects-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Jack Dufresne</h1>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="projects.html">Projects</a>
-      </nav>
-    </header>
+  <!-- Navigation -->
+  <nav>
+    <a href="#home" class="logo">
+      <span class="logo-icon">JD</span>
+      <span>Jack Dufresne</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="cta-button">Get In Touch</a>
+  </nav>
 
-    <section>
-      <p>Meachanical Engineer: I help design, validate, and deploy large-scale compute infrastructure. My work focuses on L11 and L12 mechanical and thermal architecture for direct liquid cooling systems, including manifolds, CDUs, RDHx, racks, and general SFN design. I enjoy working with large AI clusters and the systems that support them.</p>
+  <div class="container">
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <h1>Mechanical Engineer</h1>
+        <p class="subtitle">I help design, validate, and deploy large-scale compute infrastructure. My work focuses on L11 and L12 mechanical and thermal architecture for direct liquid cooling systems, including manifolds, CDUs, RDHx, racks, and general SFN design. I enjoy working with large AI clusters and the systems that support them.</p>
+        <div class="hero-buttons">
+          <a href="#projects" class="btn-primary">View My Work</a>
+          <a href="#contact" class="btn-secondary">Contact Me</a>
+        </div>
+      </div>
     </section>
 
-    <section>
-      <h2>Contact</h2>
-      <p>
-        Email: <a href="mailto:jack@jackdufresne.com">jack@jackdufresne.com</a><br>
-        LinkedIn: <a href="https://www.linkedin.com/in/jackdufresne/" target="_blank">linkedin.com/in/jackdufresne</a>
-      </p>
+    <!-- Skills Section -->
+    <section id="skills">
+      <h2 class="section-title">Core Expertise</h2>
+      <p class="section-subtitle">Specialized skills in mechanical and thermal engineering for advanced computing systems</p>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">🌡️</div>
+          <h3>Thermal Architecture</h3>
+          <p>Design and optimization of direct liquid cooling systems for high-performance computing infrastructure.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">⚙️</div>
+          <h3>Mechanical Design</h3>
+          <p>L11 and L12 mechanical architecture including manifolds, CDUs, RDHx, and rack systems.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🏗️</div>
+          <h3>System Integration</h3>
+          <p>End-to-end design and validation of large-scale compute infrastructure deployments.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🔬</div>
+          <h3>Validation & Testing</h3>
+          <p>Rigorous testing and validation processes to ensure reliability and performance.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🤖</div>
+          <h3>AI Cluster Systems</h3>
+          <p>Specialized expertise in infrastructure supporting large AI training clusters.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">📐</div>
+          <h3>SFN Design</h3>
+          <p>General SFN (System Fabric Network) design and optimization for compute systems.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+      <h2 class="section-title">About Me</h2>
+      <p class="section-subtitle">Passionate about pushing the boundaries of compute infrastructure</p>
+      <div class="about-content">
+        <div class="about-text">
+          <p>I'm a Mechanical Engineer with a deep passion for designing and deploying cutting-edge compute infrastructure. My work centers on creating robust, efficient systems that power the next generation of AI and high-performance computing.</p>
+          <p>I specialize in direct liquid cooling systems, working across the entire stack from component-level design to full system integration. My expertise spans thermal management, mechanical architecture, and system validation.</p>
+          <p>Whether it's designing manifolds for optimal flow distribution, optimizing CDU configurations, or architecting rack-level solutions, I bring a systematic approach to solving complex engineering challenges.</p>
+        </div>
+        <div class="about-highlights">
+          <div class="highlight-card">
+            <h4>L11 & L12 Design</h4>
+            <p>Expert-level knowledge in mechanical and thermal architecture at the L11 and L12 levels.</p>
+          </div>
+          <div class="highlight-card">
+            <h4>Direct Liquid Cooling</h4>
+            <p>Specialized in advanced cooling solutions for high-density compute systems.</p>
+          </div>
+          <div class="highlight-card">
+            <h4>Large-Scale Systems</h4>
+            <p>Experience with infrastructure supporting massive AI training clusters.</p>
+          </div>
+          <div class="highlight-card">
+            <h4>End-to-End Design</h4>
+            <p>From concept to deployment, ensuring reliable and efficient systems.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-subtitle">Explore my work in compute infrastructure and thermal systems</p>
+      <div class="projects-grid">
+        <div class="project-card">
+          <h3>Direct Liquid Cooling System</h3>
+          <p>Designed and validated a comprehensive direct liquid cooling solution for high-density AI compute clusters, including manifold optimization and CDU integration.</p>
+          <div class="project-tags">
+            <span class="tag">Thermal Design</span>
+            <span class="tag">System Integration</span>
+          </div>
+          <a href="projects.html" class="project-link">Learn More →</a>
+        </div>
+        <div class="project-card">
+          <h3>Rack-Level Architecture</h3>
+          <p>Architected L12 rack systems with optimized thermal management and mechanical integration for large-scale deployments.</p>
+          <div class="project-tags">
+            <span class="tag">Mechanical Design</span>
+            <span class="tag">Rack Systems</span>
+          </div>
+          <a href="projects.html" class="project-link">Learn More →</a>
+        </div>
+        <div class="project-card">
+          <h3>SFN Design Optimization</h3>
+          <p>Developed optimized SFN designs for compute infrastructure, focusing on efficiency and scalability for AI cluster applications.</p>
+          <div class="project-tags">
+            <span class="tag">SFN Design</span>
+            <span class="tag">Optimization</span>
+          </div>
+          <a href="projects.html" class="project-link">Learn More →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+      <h2 class="section-title">Get In Touch</h2>
+      <p class="section-subtitle">Let's discuss how we can work together on your next compute infrastructure project</p>
+      <div class="contact-content">
+        <div class="contact-info">
+          <div class="contact-item">
+            <h4>Email</h4>
+            <a href="mailto:jack@jackdufresne.com">jack@jackdufresne.com</a>
+          </div>
+          <div class="contact-item">
+            <h4>LinkedIn</h4>
+            <a href="https://www.linkedin.com/in/jackdufresne/" target="_blank">Connect with me</a>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>Jack Dufresne</h3>
+        <p>Mechanical Engineer specializing in large-scale compute infrastructure and direct liquid cooling systems.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="projects.html">All Projects</a></li>
+          <li><a href="https://www.linkedin.com/in/jackdufresne/" target="_blank">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#privacy">Privacy Policy</a></li>
+          <li><a href="#terms">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="copyright">
+        <p>&copy; 2024 Jack Dufresne. All rights reserved.</p>
+      </div>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/jackdufresne/" target="_blank" aria-label="LinkedIn">in</a>
+        <a href="mailto:jack@jackdufresne.com" aria-label="Email">@</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

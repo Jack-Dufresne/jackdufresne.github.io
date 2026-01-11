@@ -5,64 +5,692 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects - Jack Dufresne</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      max-width: 800px;
-      margin: 60px auto;
-      padding: 0 20px;
-      color: #222;
-      line-height: 1.7;
-      background-color: #fafafa;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    header {
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #151515;
+      --bg-card: #1a1a1a;
+      --accent: #FF5733;
+      --accent-hover: #ff6b4d;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0b0;
+      --border: rgba(255, 87, 51, 0.2);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Subtle background pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 87, 51, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 87, 51, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(255, 87, 51, 0.02) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Grid pattern overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 87, 51, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 87, 51, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 100px 40px 80px;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 0.6em;
-      margin-bottom: 2em;
+      z-index: 1000;
     }
 
-    h1 {
-      font-size: 2.2em;
-      margin: 0;
-    }
-
-    nav a {
-      margin-left: 20px;
+    .logo {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: var(--text-primary);
       text-decoration: none;
-      color: #0056b3;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), #ff8c69);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: var(--bg-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .cta-button {
+      background: var(--accent);
+      color: var(--text-primary);
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 87, 51, 0.3);
+    }
+
+    /* Page Header */
+    .page-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .page-header h1 {
+      font-size: clamp(2.5em, 5vw, 4em);
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-header p {
+      font-size: 1.2em;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 40px;
+      margin-bottom: 80px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 40px rgba(255, 87, 51, 0.15);
+    }
+
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-number {
+      font-size: 0.9em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .project-card h2 {
+      font-size: 1.8em;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .project-card p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.8;
+      font-size: 1.05em;
+    }
+
+    .project-details {
+      margin-bottom: 24px;
+    }
+
+    .project-details h3 {
+      font-size: 1em;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .project-details ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .project-details li {
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+      font-size: 0.95em;
+    }
+
+    .project-details li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .tag {
+      background: rgba(255, 87, 51, 0.1);
+      color: var(--accent);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      border: 1px solid var(--border);
       font-weight: 500;
     }
 
-    nav a:hover {
-      text-decoration: underline;
+    .project-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.3s ease;
+      font-size: 1.05em;
     }
 
-    .project {
-      margin-bottom: 1.5em;
+    .project-link:hover {
+      gap: 12px;
     }
 
-    h2 {
-      font-size: 1.4em;
-      margin-bottom: 0.3em;
+    /* Back to Home */
+    .back-link {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
     }
 
-    p {
-      margin: 0.2em 0;
+    .back-link a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.3s ease;
+      font-size: 1.1em;
+    }
+
+    .back-link a:hover {
+      gap: 12px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 60px 40px 30px;
+      position: relative;
+      z-index: 1;
+      margin-top: 80px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand h3 {
+      font-size: 1.3em;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand p {
+      color: var(--text-secondary);
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    .footer-column h4 {
+      font-size: 1.1em;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-column a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-size: 0.95em;
+    }
+
+    .footer-column a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .copyright {
+      color: var(--text-secondary);
+      font-size: 0.9em;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 968px) {
+      .footer-content {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+      }
+
+      .nav-links {
+        gap: 15px;
+        font-size: 0.9em;
+      }
+
+      .cta-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+      }
+
+      .container {
+        padding: 100px 20px 60px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links {
+        display: none;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Projects</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="projects.html">Projects</a>
-    </nav>
-  </header>
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html" class="logo">
+      <span class="logo-icon">JD</span>
+      <span>Jack Dufresne</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <a href="index.html#contact" class="cta-button">Get In Touch</a>
+  </nav>
 
-  
+  <div class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>Projects</h1>
+      <p>Explore my work in compute infrastructure, thermal systems, and mechanical engineering</p>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="projects-grid">
+      <div class="project-card">
+        <span class="project-number">01</span>
+        <h2>Direct Liquid Cooling System</h2>
+        <p>Designed and validated a comprehensive direct liquid cooling solution for high-density AI compute clusters. This project involved optimizing manifold designs for uniform flow distribution, integrating CDU (Cooling Distribution Unit) systems, and ensuring thermal performance across the entire rack infrastructure.</p>
+        <div class="project-details">
+          <h3>Key Features:</h3>
+          <ul>
+            <li>Optimized manifold design for flow distribution</li>
+            <li>CDU integration and thermal management</li>
+            <li>Rack-level thermal validation</li>
+            <li>Performance optimization for AI workloads</li>
+          </ul>
+        </div>
+        <div class="project-tags">
+          <span class="tag">Thermal Design</span>
+          <span class="tag">System Integration</span>
+          <span class="tag">L11 Architecture</span>
+        </div>
+        <a href="#contact" class="project-link">Discuss Project →</a>
+      </div>
+
+      <div class="project-card">
+        <span class="project-number">02</span>
+        <h2>Rack-Level Architecture Design</h2>
+        <p>Architected complete L12 rack systems with optimized thermal management and mechanical integration. The design focused on scalability, maintainability, and performance for large-scale AI cluster deployments.</p>
+        <div class="project-details">
+          <h3>Key Features:</h3>
+          <ul>
+            <li>L12 mechanical architecture</li>
+            <li>Thermal management optimization</li>
+            <li>Scalable rack design</li>
+            <li>Integration with cooling infrastructure</li>
+          </ul>
+        </div>
+        <div class="project-tags">
+          <span class="tag">Mechanical Design</span>
+          <span class="tag">Rack Systems</span>
+          <span class="tag">L12 Architecture</span>
+        </div>
+        <a href="#contact" class="project-link">Discuss Project →</a>
+      </div>
+
+      <div class="project-card">
+        <span class="project-number">03</span>
+        <h2>SFN Design Optimization</h2>
+        <p>Developed optimized SFN (System Fabric Network) designs for compute infrastructure, focusing on efficiency, scalability, and performance for AI cluster applications. The project involved system-level optimization and integration.</p>
+        <div class="project-details">
+          <h3>Key Features:</h3>
+          <ul>
+            <li>System fabric network optimization</li>
+            <li>Scalability analysis and design</li>
+            <li>Performance validation</li>
+            <li>Integration with compute systems</li>
+          </ul>
+        </div>
+        <div class="project-tags">
+          <span class="tag">SFN Design</span>
+          <span class="tag">Optimization</span>
+          <span class="tag">System Architecture</span>
+        </div>
+        <a href="#contact" class="project-link">Discuss Project →</a>
+      </div>
+
+      <div class="project-card">
+        <span class="project-number">04</span>
+        <h2>RDHx Integration & Validation</h2>
+        <p>Designed and validated RDHx (Rack Distribution Heat Exchanger) systems for direct liquid cooling infrastructure. This involved thermal modeling, flow optimization, and comprehensive validation testing.</p>
+        <div class="project-details">
+          <h3>Key Features:</h3>
+          <ul>
+            <li>RDHx system design</li>
+            <li>Thermal modeling and simulation</li>
+            <li>Flow optimization</li>
+            <li>Validation and testing protocols</li>
+          </ul>
+        </div>
+        <div class="project-tags">
+          <span class="tag">RDHx</span>
+          <span class="tag">Thermal Engineering</span>
+          <span class="tag">Validation</span>
+        </div>
+        <a href="#contact" class="project-link">Discuss Project →</a>
+      </div>
+
+      <div class="project-card">
+        <span class="project-number">05</span>
+        <h2>Large-Scale AI Cluster Infrastructure</h2>
+        <p>Worked on end-to-end design and deployment of infrastructure supporting large AI training clusters. This project encompassed mechanical design, thermal management, and system integration at scale.</p>
+        <div class="project-details">
+          <h3>Key Features:</h3>
+          <ul>
+            <li>Large-scale system architecture</li>
+            <li>AI cluster optimization</li>
+            <li>End-to-end design and validation</li>
+            <li>Deployment and integration</li>
+          </ul>
+        </div>
+        <div class="project-tags">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Large-Scale Systems</span>
+          <span class="tag">System Integration</span>
+        </div>
+        <a href="#contact" class="project-link">Discuss Project →</a>
+      </div>
+
+      <div class="project-card">
+        <span class="project-number">06</span>
+        <h2>Manifold Design & Optimization</h2>
+        <p>Specialized project focusing on manifold design for direct liquid cooling systems. This involved computational fluid dynamics (CFD) analysis, flow distribution optimization, and mechanical design for manufacturability.</p>
+        <div class="project-details">
+          <h3>Key Features:</h3>
+          <ul>
+            <li>CFD analysis and optimization</li>
+            <li>Flow distribution design</li>
+            <li>Mechanical design for manufacturing</li>
+            <li>Performance validation</li>
+          </ul>
+        </div>
+        <div class="project-tags">
+          <span class="tag">Manifold Design</span>
+          <span class="tag">CFD</span>
+          <span class="tag">Optimization</span>
+        </div>
+        <a href="#contact" class="project-link">Discuss Project →</a>
+      </div>
+    </div>
+
+    <!-- Back to Home -->
+    <div class="back-link">
+      <a href="index.html">← Back to Home</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>Jack Dufresne</h3>
+        <p>Mechanical Engineer specializing in large-scale compute infrastructure and direct liquid cooling systems.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="index.html#skills">Skills</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="projects.html">All Projects</a></li>
+          <li><a href="https://www.linkedin.com/in/jackdufresne/" target="_blank">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#privacy">Privacy Policy</a></li>
+          <li><a href="#terms">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="copyright">
+        <p>&copy; 2024 Jack Dufresne. All rights reserved.</p>
+      </div>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/jackdufresne/" target="_blank" aria-label="LinkedIn">in</a>
+        <a href="mailto:jack@jackdufresne.com" aria-label="Email">@</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
