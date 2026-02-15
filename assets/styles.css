@@ -136,31 +136,6 @@ a {
   font-size: 1rem;
 }
 
-.ascii-frame {
-  border: 1px solid var(--black);
-  padding: 0.75rem;
-  overflow-x: auto;
-  background: var(--white);
-}
-
-.ascii-art {
-  font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
-  font-size: clamp(0.29rem, 1.1vw, 0.47rem);
-  line-height: 1;
-  letter-spacing: 0.02em;
-  white-space: pre;
-  color: var(--black);
-  min-width: 800px;
-}
-
-.caption {
-  margin-top: 0.75rem;
-  font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.7rem;
-}
-
 .texture {
   border: 1px solid var(--black);
   padding: 1rem;
@@ -275,11 +250,4 @@ a {
     margin-top: 2.4rem;
   }
 
-  .ascii-frame {
-    padding: 0.5rem;
-  }
-
-  .ascii-art {
-    min-width: 620px;
-  }
 }
