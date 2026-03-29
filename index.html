@@ -199,27 +199,27 @@
     .visual-wrap {
       display: flex;
       justify-content: flex-end;
-      position: relative;
     }
 
-    .visual-wrap::before {
-      content: "";
-      position: absolute;
-      inset: 12% 8% 12% 12%;
-      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 72%);
-      filter: blur(28px);
-      pointer-events: none;
+    .visual-panel {
+      width: min(100%, 500px);
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+        var(--panel);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
     }
 
-    .visual-wrap img {
+    .visual-panel img {
       display: block;
-      width: min(100%, 540px);
+      width: 100%;
       height: auto;
-      filter: grayscale(1) contrast(1.08) brightness(0.92);
+      border-radius: 18px;
+      filter: grayscale(1) contrast(1.05) brightness(0.94);
       mix-blend-mode: screen;
-      opacity: 0.82;
-      mask-image: radial-gradient(circle at center, black 52%, transparent 100%);
-      -webkit-mask-image: radial-gradient(circle at center, black 52%, transparent 100%);
+      opacity: 0.92;
     }
 
     @media (max-width: 900px) {
@@ -230,6 +230,10 @@
 
       .visual-wrap {
         justify-content: flex-start;
+      }
+
+      .visual-panel {
+        max-width: 560px;
       }
     }
 
@@ -295,7 +299,9 @@
       </section>
 
       <div class="visual-wrap" aria-hidden="true">
-        <img src="assets/images/rack_sketch.png" alt="">
+        <div class="visual-panel">
+          <img src="assets/images/rack_sketch.png" alt="">
+        </div>
       </div>
     </main>
   </div>
