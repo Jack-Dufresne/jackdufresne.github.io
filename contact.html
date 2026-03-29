@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jack Dufresne | Media</title>
+  <title>Jack Dufresne | Contact</title>
   <meta
     name="description"
-    content="Media page for Jack Dufresne."
+    content="Contact Jack Dufresne through LinkedIn, X, or email."
   >
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -116,7 +116,8 @@
     }
 
     .theme-toggle,
-    .nav-button {
+    .nav-button,
+    .contact-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -144,28 +145,74 @@
     }
 
     .theme-toggle:hover,
-    .nav-button:hover {
+    .nav-button:hover,
+    .contact-link:hover {
       transform: translateY(-2px);
       background: rgba(255, 255, 255, 0.08);
       border-color: rgba(244, 244, 240, 0.34);
     }
 
     main {
-      padding-top: 56px;
-      max-width: 720px;
+      padding-top: 42px;
+      max-width: 980px;
     }
 
     h1 {
-      font-size: clamp(2.6rem, 8vw, 5rem);
-      line-height: 0.95;
-      letter-spacing: -0.06em;
-      margin-bottom: 24px;
+      font-size: clamp(3rem, 9vw, 6rem);
+      line-height: 0.92;
+      letter-spacing: -0.07em;
+      font-weight: 700;
+      margin-bottom: 22px;
     }
 
-    p {
+    .intro-copy {
+      max-width: 700px;
       color: var(--muted);
-      font-size: 1.05rem;
+      font-size: clamp(1.02rem, 1.9vw, 1.22rem);
       line-height: 1.8;
+      margin-bottom: 34px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .contact-card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+        var(--panel);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    }
+
+    .contact-label {
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .contact-value {
+      font-size: 1.15rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      word-break: break-word;
+    }
+
+    .contact-link {
+      width: 100%;
+    }
+
+    @media (max-width: 900px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 680px) {
@@ -184,6 +231,14 @@
         flex-wrap: wrap;
         justify-self: start;
       }
+
+      h1 {
+        font-size: clamp(2.6rem, 16vw, 4.6rem);
+      }
+
+      .intro-copy {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -192,9 +247,9 @@
     <header class="topbar">
       <a class="brand" href="index.html">Jack Dufresne</a>
       <nav class="header-nav" aria-label="Main navigation">
-        <a class="nav-button" href="media.html" aria-current="page">Media</a>
+        <a class="nav-button" href="media.html">Media</a>
         <a class="nav-button" href="my-work.html">My work</a>
-        <a class="nav-button" href="contact.html">Contact</a>
+        <a class="nav-button" href="contact.html" aria-current="page">Contact</a>
       </nav>
       <div class="header-actions">
         <button class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">Light</button>
@@ -202,8 +257,28 @@
     </header>
 
     <main>
-      <h1>Media</h1>
-      <p>Press features, interviews, publications, and visual material will live here.</p>
+      <h1>Contact Me</h1>
+      <p class="intro-copy">Reach out through LinkedIn, X, or email.</p>
+
+      <section class="contact-grid" aria-label="Contact methods">
+        <article class="contact-card">
+          <p class="contact-label">LinkedIn</p>
+          <p class="contact-value">linkedin.com/in/jackdufresne</p>
+          <a class="contact-link" href="https://www.linkedin.com/in/jackdufresne/" target="_blank" rel="noopener noreferrer">Open LinkedIn</a>
+        </article>
+
+        <article class="contact-card">
+          <p class="contact-label">X</p>
+          <p class="contact-value">x.com/JackDufresne_</p>
+          <a class="contact-link" href="https://x.com/JackDufresne_" target="_blank" rel="noopener noreferrer">Open X</a>
+        </article>
+
+        <article class="contact-card">
+          <p class="contact-label">Email</p>
+          <p class="contact-value">jack.dufresne1@gmail.com</p>
+          <a class="contact-link" href="mailto:jack.dufresne1@gmail.com">Send Email</a>
+        </article>
+      </section>
     </main>
   </div>
   <script>
