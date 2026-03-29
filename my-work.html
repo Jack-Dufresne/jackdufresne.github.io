@@ -238,6 +238,47 @@
       background: rgba(255, 255, 255, 0.02);
     }
 
+    .project-list details {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      overflow: hidden;
+    }
+
+    .project-list summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 14px 44px 14px 16px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .project-list summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .project-list summary::after {
+      content: "+";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 1rem;
+    }
+
+    .project-list details[open] summary::after {
+      content: "-";
+    }
+
+    .project-detail {
+      padding: 0 16px 16px;
+      color: var(--muted);
+      line-height: 1.8;
+      border-top: 1px solid var(--line);
+    }
+
     .project-list:empty::after {
       content: "";
       display: block;
@@ -316,15 +357,24 @@
       <section class="timeline" aria-label="Project timeline">
         <article class="year-block">
           <h2 class="year-label">2026</h2>
-          <ul class="project-list"></ul>
+          <ul class="project-list">
+            <li>Rack Integrated Energy Valve Module</li>
+            <li>Integration Site Infrastructure</li>
+          </ul>
         </article>
 
         <article class="year-block">
           <h2 class="year-label">2025</h2>
           <ul class="project-list">
-            <li>Rack Integrated Energy Valve Module</li>
             <li>NVIDIA Vera Rubin NVL72 Custom Manifolds</li>
-            <li>Automated Isolation Valves</li>
+            <li>
+              <details>
+                <summary>Automated Isolation Valves</summary>
+                <div class="project-detail">
+                  This project enabled an automated response to rack-level leaks. When a leak is detected, actuated ball valves on the supply header close, and a check valve on the return line isolates the affected rack from the rest of the row. The system is designed as modular hardware with dry-break connections, allowing integration and service across a wide range of customer facilities at both L11 and L12.
+                </div>
+              </details>
+            </li>
             <li>Deployment Engineer for the World&apos;s Largest Supercomputer</li>
             <li>Diagnostic Filtration Modules</li>
             <li>Custom Designed In-Rack CDUs</li>
