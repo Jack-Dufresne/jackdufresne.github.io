@@ -69,14 +69,6 @@
       pointer-events: none;
     }
 
-    body:not(.is-ready) main {
-      opacity: 0;
-    }
-
-    body.is-leaving main {
-      opacity: 0;
-    }
-
     a {
       color: inherit;
       text-decoration: none;
@@ -171,7 +163,6 @@
       gap: 40px;
       align-items: center;
       padding: 42px 0 10px;
-      transition: opacity 0.18s ease;
     }
 
     .hero {
@@ -229,17 +220,6 @@
       filter: grayscale(1) contrast(1.05) brightness(0.94);
       mix-blend-mode: screen;
       opacity: 0.92;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      main {
-        transition: none;
-      }
-
-      body:not(.is-ready) main,
-      body.is-leaving main {
-        opacity: 1;
-      }
     }
 
     @media (max-width: 900px) {
@@ -333,58 +313,6 @@
     if (savedTheme === "light") {
       root.setAttribute("data-theme", "light");
     }
-
-    requestAnimationFrame(() => {
-      root.classList.add("is-ready");
-    });
-
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    document.querySelectorAll("a[href]").forEach((link) => {
-      link.addEventListener("click", (event) => {
-        if (
-          event.defaultPrevented ||
-          event.button !== 0 ||
-          event.metaKey ||
-          event.ctrlKey ||
-          event.shiftKey ||
-          event.altKey
-        ) {
-          return;
-        }
-
-        const href = link.getAttribute("href");
-
-        if (
-          !href ||
-          href.startsWith("#") ||
-          href.startsWith("mailto:") ||
-          href.startsWith("tel:") ||
-          link.hasAttribute("download") ||
-          link.target === "_blank"
-        ) {
-          return;
-        }
-
-        const nextUrl = new URL(link.href, window.location.href);
-
-        if (nextUrl.origin !== window.location.origin || nextUrl.href === window.location.href) {
-          return;
-        }
-
-        if (reduceMotion.matches) {
-          return;
-        }
-
-        event.preventDefault();
-        root.classList.remove("is-ready");
-        root.classList.add("is-leaving");
-
-        window.setTimeout(() => {
-          window.location.href = nextUrl.href;
-        }, 180);
-      });
-    });
 
     const syncThemeToggle = () => {
       const isLight = root.getAttribute("data-theme") === "light";
