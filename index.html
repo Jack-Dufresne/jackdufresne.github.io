@@ -69,10 +69,14 @@
       pointer-events: none;
     }
 
-    body:not(.is-ready) .topbar,
-    body:not(.is-ready) .hero,
-    body:not(.is-ready) .visual-panel {
+    body:not(.is-ready) .shell {
       opacity: 0;
+      transform: translateY(14px);
+    }
+
+    body.is-leaving .shell {
+      opacity: 0;
+      transform: translateY(10px);
     }
 
     a {
@@ -86,6 +90,7 @@
       width: min(calc(100% - 40px), var(--max));
       margin: 0 auto;
       padding: 32px 0 40px;
+      transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
     .topbar {
@@ -260,16 +265,18 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+      .shell,
       .topbar,
       .hero,
       .visual-panel {
         animation: none;
+        transition: none;
       }
 
-      body:not(.is-ready) .topbar,
-      body:not(.is-ready) .hero,
-      body:not(.is-ready) .visual-panel {
+      body:not(.is-ready) .shell,
+      body.is-leaving .shell {
         opacity: 1;
+        transform: none;
       }
     }
 
@@ -367,6 +374,54 @@
 
     requestAnimationFrame(() => {
       root.classList.add("is-ready");
+    });
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    document.querySelectorAll("a[href]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        if (
+          event.defaultPrevented ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        ) {
+          return;
+        }
+
+        const href = link.getAttribute("href");
+
+        if (
+          !href ||
+          href.startsWith("#") ||
+          href.startsWith("mailto:") ||
+          href.startsWith("tel:") ||
+          link.hasAttribute("download") ||
+          link.target === "_blank"
+        ) {
+          return;
+        }
+
+        const nextUrl = new URL(link.href, window.location.href);
+
+        if (nextUrl.origin !== window.location.origin || nextUrl.href === window.location.href) {
+          return;
+        }
+
+        if (reduceMotion.matches) {
+          return;
+        }
+
+        event.preventDefault();
+        root.classList.remove("is-ready");
+        root.classList.add("is-leaving");
+
+        window.setTimeout(() => {
+          window.location.href = nextUrl.href;
+        }, 180);
+      });
     });
 
     const syncThemeToggle = () => {
