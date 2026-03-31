@@ -69,14 +69,12 @@
       pointer-events: none;
     }
 
-    body:not(.is-ready) .shell {
+    body:not(.is-ready) main {
       opacity: 0;
-      transform: translateY(14px);
     }
 
-    body.is-leaving .shell {
+    body.is-leaving main {
       opacity: 0;
-      transform: translateY(10px);
     }
 
     a {
@@ -90,7 +88,6 @@
       width: min(calc(100% - 40px), var(--max));
       margin: 0 auto;
       padding: 32px 0 40px;
-      transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
     .topbar {
@@ -166,6 +163,7 @@
     main {
       padding-top: 42px;
       max-width: 980px;
+      transition: opacity 0.18s ease;
     }
 
     h1 {
@@ -253,14 +251,13 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .shell {
+      main {
         transition: none;
       }
 
-      body:not(.is-ready) .shell,
-      body.is-leaving .shell {
+      body:not(.is-ready) main,
+      body.is-leaving main {
         opacity: 1;
-        transform: none;
       }
     }
   </style>
