@@ -69,6 +69,12 @@
       pointer-events: none;
     }
 
+    body:not(.is-ready) .topbar,
+    body:not(.is-ready) .hero,
+    body:not(.is-ready) .visual-panel {
+      opacity: 0;
+    }
+
     a {
       color: inherit;
       text-decoration: none;
@@ -89,6 +95,7 @@
       gap: 18px;
       padding-bottom: 24px;
       border-bottom: 1px solid var(--line);
+      animation: rise-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) 0.04s both;
     }
 
     .brand {
@@ -167,6 +174,7 @@
 
     .hero {
       max-width: 620px;
+      animation: rise-in 0.46s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
     }
 
     h1 {
@@ -210,6 +218,7 @@
         linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
         var(--panel);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      animation: panel-in 0.52s cubic-bezier(0.2, 1, 0.3, 1) 0.18s both;
     }
 
     .visual-panel img {
@@ -220,6 +229,48 @@
       filter: grayscale(1) contrast(1.05) brightness(0.94);
       mix-blend-mode: screen;
       opacity: 0.92;
+    }
+
+    @keyframes rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+        filter: blur(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes panel-in {
+      from {
+        opacity: 0;
+        transform: translateY(22px) scale(0.985);
+        filter: blur(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .topbar,
+      .hero,
+      .visual-panel {
+        animation: none;
+      }
+
+      body:not(.is-ready) .topbar,
+      body:not(.is-ready) .hero,
+      body:not(.is-ready) .visual-panel {
+        opacity: 1;
+      }
     }
 
     @media (max-width: 900px) {
@@ -313,6 +364,10 @@
     if (savedTheme === "light") {
       root.setAttribute("data-theme", "light");
     }
+
+    requestAnimationFrame(() => {
+      root.classList.add("is-ready");
+    });
 
     const syncThemeToggle = () => {
       const isLight = root.getAttribute("data-theme") === "light";
