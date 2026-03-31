@@ -192,6 +192,18 @@
       margin-top: 30px;
     }
 
+    .cta-button {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .cta-button:hover {
+      background: color-mix(in srgb, var(--text) 88%, var(--bg) 12%);
+      border-color: color-mix(in srgb, var(--text) 88%, var(--bg) 12%);
+    }
+
     .visual-wrap {
       display: flex;
       justify-content: flex-end;
@@ -290,7 +302,7 @@
           I engineer mechanical and thermal infrastructure for high-power AI compute racks. My work spans from concept through field deployment, with a focus on high-density GPU systems and the facilities they operate in.
         </p>
         <div class="cta-row">
-          <a class="work-button" href="my-work.html">My work</a>
+          <a class="work-button cta-button" href="my-work.html">My work</a>
         </div>
       </section>
 
