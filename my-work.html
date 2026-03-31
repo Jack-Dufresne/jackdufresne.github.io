@@ -269,36 +269,39 @@
       font-size: 1rem;
     }
 
-    .project-list details[open] summary::after {
+    .project-list details[data-expanded="true"] summary::after {
       content: "-";
     }
 
     .project-content {
-      display: grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows 0.22s ease;
-    }
-
-    .project-list details[open] .project-content {
-      grid-template-rows: 1fr;
+      height: 0;
+      overflow: hidden;
+      transition: height 0.24s ease;
     }
 
     .project-detail {
-      overflow: hidden;
-      padding: 0 16px 16px;
+      padding: 0 16px;
       color: var(--muted);
       line-height: 1.8;
-      border-top: 1px solid var(--line);
+      border-top: 1px solid transparent;
       opacity: 0;
       transform: translateY(-6px);
-      transition: opacity 0.18s ease, transform 0.18s ease, padding-top 0.18s ease;
+      transition:
+        opacity 0.18s ease,
+        transform 0.18s ease,
+        padding-top 0.18s ease,
+        padding-bottom 0.18s ease,
+        border-color 0.18s ease;
       padding-top: 0;
+      padding-bottom: 0;
     }
 
-    .project-list details[open] .project-detail {
+    .project-list details[data-expanded="true"] .project-detail {
       opacity: 1;
       transform: translateY(0);
       padding-top: 14px;
+      padding-bottom: 16px;
+      border-top-color: var(--line);
     }
 
     .project-list:empty::after {
@@ -530,6 +533,85 @@
       }
 
       syncThemeToggle();
+    });
+
+    const projectDetails = document.querySelectorAll(".project-list details");
+
+    const finishOpen = (details, content) => {
+      content.style.height = "auto";
+      details.dataset.animating = "false";
+    };
+
+    const finishClose = (details, content) => {
+      details.open = false;
+      content.style.height = "";
+      details.dataset.animating = "false";
+    };
+
+    projectDetails.forEach((details) => {
+      const summary = details.querySelector("summary");
+      const content = details.querySelector(".project-content");
+
+      details.dataset.expanded = details.open ? "true" : "false";
+      details.dataset.animating = "false";
+
+      if (details.open) {
+        content.style.height = "auto";
+      }
+
+      summary.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        if (details.dataset.animating === "true") {
+          return;
+        }
+
+        const isOpen = details.open;
+        details.dataset.animating = "true";
+
+        if (!isOpen) {
+          details.open = true;
+          details.dataset.expanded = "true";
+          content.style.height = "0px";
+
+          requestAnimationFrame(() => {
+            content.style.height = `${content.scrollHeight}px`;
+          });
+
+          const onOpenEnd = (transitionEvent) => {
+            if (transitionEvent.propertyName !== "height") {
+              return;
+            }
+
+            content.removeEventListener("transitionend", onOpenEnd);
+            finishOpen(details, content);
+          };
+
+          content.addEventListener("transitionend", onOpenEnd);
+          return;
+        }
+
+        content.style.height = `${content.scrollHeight}px`;
+
+        requestAnimationFrame(() => {
+          details.dataset.expanded = "false";
+
+          requestAnimationFrame(() => {
+            content.style.height = "0px";
+          });
+        });
+
+        const onCloseEnd = (transitionEvent) => {
+          if (transitionEvent.propertyName !== "height") {
+            return;
+          }
+
+          content.removeEventListener("transitionend", onCloseEnd);
+          finishClose(details, content);
+        };
+
+        content.addEventListener("transitionend", onCloseEnd);
+      });
     });
   </script>
 </body>
